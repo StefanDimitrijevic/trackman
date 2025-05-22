@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar/Navbar";
 const MainLayout: FC = () => (
   <>
     <Navbar />
-    <main style={{ padding: "1rem" }}>
+    <main style={{ padding: "1.5rem", backgroundColor: "#FAFAFA" }}>
       <Outlet />
     </main>
   </>

@@ -1,0 +1,13 @@
+.open {
+  background-color: #EBFFEE;
+  color: #14AE5C;
+  padding: 2px 6px;
+  border-radius: 9999px;
+}
+
+.closed {
+  background-color: #FEE9E7;
+  color: #EC221F;
+  padding: 2px 6px;
+  border-radius: 9999px;
+}
