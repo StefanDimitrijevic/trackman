@@ -8,3 +8,5 @@ export interface Facility {
   openingHour: string; // e.g., "08:00"
   closingHour: string; // e.g., "18:00"
 }
+
+export type Statuses = "Open" | "Closed";
