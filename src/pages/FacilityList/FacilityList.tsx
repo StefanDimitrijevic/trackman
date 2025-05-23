@@ -1,10 +1,11 @@
-import type { FC } from "react";
+import { useState, type FC } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Facility } from "../../types/facilities";
 import LocationMarker from "../../assets/location-marker.svg";
+import TrashCan from "../../assets/trashcan.svg";
 import StatusBadge from "../../components/StatusBadge/StatusBadge";
 
-const facilities: Facility[] = [
+const initialFacilities: Facility[] = [
   {
     id: "1",
     name: "Sunset Golf Club",
@@ -70,6 +71,12 @@ const facilities: Facility[] = [
 const FacilityList: FC = () => {
   const navigate = useNavigate();
 
+  const [facilities, setFacilities] = useState<Facility[]>(initialFacilities);
+
+  const handleDeleteFacility = (id: string) => {
+    setFacilities((prev) => prev.filter((facility) => facility.id !== id));
+  };
+
   const isFacilityOpen = (
     openingHour: string,
     closingHour: string
@@ -126,20 +133,51 @@ const FacilityList: FC = () => {
                 style={{
                   display: "flex",
                   alignItems: "center",
+                  justifyContent: "space-between",
+                  height: "32px",
                 }}
               >
-                <img src={LocationMarker} alt="location" />
-                <p>{facility.address}</p>
-                <button
+                <div
                   style={{
-                    backgroundColor: "#F5F5F5",
-                    border: "none",
-                    padding: "6px 24px",
-                    cursor: "pointer",
+                    display: "flex",
+                    gap: "2px",
                   }}
                 >
-                  Edit
-                </button>
+                  <img src={LocationMarker} alt="location" />
+                  <p>{facility.address}</p>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "4px",
+                  }}
+                >
+                  <button
+                    style={{
+                      display: "flex",
+                      backgroundColor: "#F5F5F5",
+                      border: "none",
+                      borderRadius: "4px",
+                      padding: "8px",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handleDeleteFacility(facility.id)}
+                  >
+                    <img src={TrashCan} alt="delete-facility" />
+                  </button>
+                  <button
+                    style={{
+                      backgroundColor: "#F5F5F5",
+                      border: "none",
+                      borderRadius: "4px",
+                      padding: "6px 24px",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => navigate(`/edit/${facility.id}`)}
+                  >
+                    Edit
+                  </button>
+                </div>
               </div>
               <p>{facility.description}</p>
             </div>
