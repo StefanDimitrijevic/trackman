@@ -9,6 +9,8 @@ const FacilityForm: FC = () => {
   const navigate = useNavigate();
   const isEditing = Boolean(id);
 
+  const [isFirstFacility, setIsFirstFacility] = useState(false);
+
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
@@ -18,10 +20,10 @@ const FacilityForm: FC = () => {
   const [isDefault, setIsDefault] = useState(false);
 
   useEffect(() => {
-    if (isEditing && id) {
-      const facilities = getFacilities();
-      const facility = facilities.find((f) => f.id === id);
+    const facilities = getFacilities();
 
+    if (isEditing && id) {
+      const facility = facilities.find((f) => f.id === id);
       if (facility) {
         setName(facility.name);
         setAddress(facility.address);
@@ -30,6 +32,12 @@ const FacilityForm: FC = () => {
         setOpeningHour(facility.openingHour);
         setClosingHour(facility.closingHour);
         setIsDefault(facility.isDefault);
+      }
+    } else {
+      // Create mode logic
+      if (facilities.length === 0) {
+        setIsDefault(true);
+        setIsFirstFacility(true);
       }
     }
   }, [id, isEditing]);
@@ -144,6 +152,7 @@ const FacilityForm: FC = () => {
             id="isDefault"
             type="checkbox"
             checked={isDefault}
+            disabled={isFirstFacility}
             onChange={(e) => setIsDefault(e.target.checked)}
           />
           <div style={{ display: "flex", flexDirection: "column" }}>
