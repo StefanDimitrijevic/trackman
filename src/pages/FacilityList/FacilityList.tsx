@@ -7,69 +7,6 @@ import DefaultFacility from "../../assets/star.svg";
 import StatusBadge from "../../components/StatusBadge/StatusBadge";
 import { getFacilities, saveFacilities } from "../../data/facilityStore";
 
-// const initialFacilities: Facility[] = [
-//   {
-//     id: "1",
-//     name: "Sunset Golf Club",
-//     address: "123 Palm Drive, LA",
-//     description: "A scenic course near the beach.",
-//     imageUrl: "https://picsum.photos/seed/golf1/400/300",
-//     isDefault: true,
-//     openingHour: "08:00",
-//     closingHour: "20:00",
-//   },
-//   {
-//     id: "2",
-//     name: "Mountain Range Golf",
-//     address: "456 Alpine Road, CO",
-//     description: "Challenging course with mountain views.",
-//     imageUrl: "https://picsum.photos/seed/golf2/400/300",
-//     isDefault: false,
-//     openingHour: "07:00",
-//     closingHour: "23:45",
-//   },
-//   {
-//     id: "3",
-//     name: "Lakeside Greens",
-//     address: "789 Lake Ave, MN",
-//     description: "Water hazards and beautiful lake views.",
-//     imageUrl: "https://picsum.photos/seed/golf3/400/300",
-//     isDefault: false,
-//     openingHour: "06:30",
-//     closingHour: "21:00",
-//   },
-//   {
-//     id: "4",
-//     name: "Desert Dunes Club",
-//     address: "321 Sandhill Blvd, AZ",
-//     description: "Hot days and fast greens.",
-//     imageUrl: "https://picsum.photos/seed/golf4/400/300",
-//     isDefault: false,
-//     openingHour: "07:30",
-//     closingHour: "18:30",
-//   },
-//   {
-//     id: "5",
-//     name: "Urban Swing Golf",
-//     address: "654 City Square, NY",
-//     description: "Modern facility in the heart of the city.",
-//     imageUrl: "https://picsum.photos/seed/golf5/400/300",
-//     isDefault: false,
-//     openingHour: "09:00",
-//     closingHour: "23:30",
-//   },
-//   {
-//     id: "6",
-//     name: "Ocean Breeze Club",
-//     address: "987 Coastline Dr, FL",
-//     description: "Windy seaside fairways.",
-//     imageUrl: "https://picsum.photos/seed/golf6/400/300",
-//     isDefault: false,
-//     openingHour: "08:00",
-//     closingHour: "23:30",
-//   },
-// ];
-
 const FacilityList: FC = () => {
   const navigate = useNavigate();
 
@@ -81,9 +18,18 @@ const FacilityList: FC = () => {
   }, []);
 
   const handleDeleteFacility = (id: string) => {
-    const updated = facilities.filter((facility) => facility.id !== id);
-    setFacilities(updated);
-    saveFacilities(updated);
+    const facilitiesCopy = [...facilities];
+    const deletedFacility = facilitiesCopy.find((f) => f.id === id);
+
+    const updatedFacilities = facilitiesCopy.filter((f) => f.id !== id);
+
+    // If the deleted facility was the default, assign the first remaining one to be the defauæt
+    if (deletedFacility?.isDefault && updatedFacilities.length > 0) {
+      updatedFacilities[0].isDefault = true;
+    }
+
+    setFacilities(updatedFacilities);
+    saveFacilities(updatedFacilities);
   };
 
   const isFacilityOpen = (
@@ -98,6 +44,7 @@ const FacilityList: FC = () => {
 
     return currentHour >= openHour && currentHour < closeHour;
   };
+
   return (
     <div>
       <button onClick={() => navigate("/create")}>Create Facility</button>
