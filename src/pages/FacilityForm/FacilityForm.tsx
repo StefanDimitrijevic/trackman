@@ -82,7 +82,6 @@ const FacilityForm: FC = () => {
       console.log("Created:", newFacility);
     }
 
-    // Optionally redirect after save
     navigate("/");
   };
 
