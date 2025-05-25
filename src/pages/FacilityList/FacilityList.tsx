@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import type { Facility } from "../../types/facilities";
 import { getFacilities, saveFacilities } from "../../data/facilityStore";
 import FacilityCard from "../../components/FacilityCard/FacilityCard";
+import Button from "../../components/Button/Button";
 
 const FacilityList: FC = () => {
   const navigate = useNavigate();
@@ -35,7 +36,13 @@ const FacilityList: FC = () => {
 
   return (
     <div>
-      <button onClick={() => navigate("/create")}>Create Facility</button>
+      <Button
+        variant="primary"
+        padding="normal"
+        onClick={() => navigate("/create")}
+      >
+        Create Facility
+      </Button>
       <div
         style={{
           display: "flex",

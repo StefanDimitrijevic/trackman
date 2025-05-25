@@ -28,6 +28,12 @@
   margin-top: 8px;
 }
 
+.name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .bottomRow {
   display: flex;
   align-items: center;
@@ -40,6 +46,16 @@
   display: flex;
   gap: 2px;
   align-items: center;
+}
+
+.address {
+  color: #757575;
+  font-weight: 400;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 190px;
 }
 
 .actionsContainer {

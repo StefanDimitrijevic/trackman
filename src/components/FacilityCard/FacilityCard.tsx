@@ -7,6 +7,7 @@ import StatusBadge from "../StatusBadge/StatusBadge";
 import { isFacilityOpen } from "../../utils/openingHours";
 import Card from "../Card/Card";
 import styles from "./FacilityCard.module.css";
+import Button from "../Button/Button";
 
 interface FacilityCardProps {
   facility: Facility;
@@ -37,29 +38,35 @@ const FacilityCard: FC<FacilityCardProps> = ({
       </div>
 
       <div className={styles.topRow}>
-        <p>{facility.name}</p>
+        <p title={facility.name} className={styles.name}>
+          {facility.name}
+        </p>
         <StatusBadge status={isOpen ? "Open" : "Closed"} />
       </div>
 
       <div className={styles.bottomRow}>
         <div className={styles.addressContainer}>
           <img src={LocationMarker} alt="location" />
-          <p>{facility.address}</p>
+          <p title={facility.address} className={styles.address}>
+            {facility.address}
+          </p>
         </div>
 
         <div className={styles.actionsContainer}>
-          <button
-            className={styles.deleteButton}
+          <Button
+            variant="secondary"
+            icon={<img src={TrashCan} alt="delete-facility" />}
+            padding="normal"
             onClick={() => onDelete(facility.id)}
-          >
-            <img src={TrashCan} alt="delete-facility" />
-          </button>
-          <button
-            className={styles.editButton}
+            aria-label="Delete Facility"
+          />
+          <Button
+            variant="secondary"
+            padding="tight"
             onClick={() => onEdit(facility.id)}
           >
             Edit
-          </button>
+          </Button>
         </div>
       </div>
 
