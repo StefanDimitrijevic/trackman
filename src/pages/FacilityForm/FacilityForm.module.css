@@ -1,11 +1,38 @@
-.form { 
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+.facilityForm {
+	padding: 32px 16px 0;
+}
+
+.header {
+	padding-bottom: 16px;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding: 12px;
+	border-radius: 8px;
+	background-color: #FFFFFF;
+}
+
+.hoursLabel {
+	margin-bottom: 12px;
+}
+
+.hoursContainer {
+  display: flex;
+	flex-wrap: wrap;
+  gap: 10px;
+	max-width: 384px;
+}
+
+.hoursContainer > * {
+  flex: 1;
+	min-width: 0;
 }
 
 .buttonContainer {
-    display: flex;
-    gap: 10px;
-    justify-content: end;
+	display: flex;
+	gap: 10px;
+	justify-content: end;
 }

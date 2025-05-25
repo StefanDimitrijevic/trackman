@@ -4,6 +4,7 @@ import type { Facility } from "../../types/facilities";
 import { getFacilities, saveFacilities } from "../../data/facilityStore";
 import FacilityCard from "../../components/FacilityCard/FacilityCard";
 import Button from "../../components/Button/Button";
+import styles from "./FacilityList.module.css";
 
 const FacilityList: FC = () => {
   const navigate = useNavigate();
@@ -35,21 +36,17 @@ const FacilityList: FC = () => {
   };
 
   return (
-    <div>
-      <Button
-        variant="primary"
-        padding="normal"
-        onClick={() => navigate("/create")}
-      >
-        Create Facility
-      </Button>
-      <div
-        style={{
-          display: "flex",
-          gap: "20px",
-          flexWrap: "wrap",
-        }}
-      >
+    <div className={styles.facilityList}>
+      <div className={styles.buttonRow}>
+        <Button
+          variant="primary"
+          padding="normal"
+          onClick={() => navigate("/create")}
+        >
+          Create Facility
+        </Button>
+      </div>
+      <div className={styles.facilityGrid}>
         {facilities.map((facility) => (
           <FacilityCard
             key={facility.id}

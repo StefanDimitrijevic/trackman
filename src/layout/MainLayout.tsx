@@ -1,12 +1,15 @@
 import type { FC } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
+import styles from "./MainLayout.module.css";
 
 const MainLayout: FC = () => (
   <>
     <Navbar />
-    <main style={{ padding: "1.5rem", backgroundColor: "#FAFAFA" }}>
-      <Outlet />
+    <main className={styles.outerContainer}>
+      <div className={styles.innerContainer}>
+        <Outlet />
+      </div>
     </main>
   </>
 );
