@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid #9CA3AF;
+  appearance: none;
+  cursor: pointer;
+  position: relative;
+  margin: 0;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox:checked {
+  background-color: #EC691A;
+  border-color: #EC691A;
+}
+
+.checkbox:checked::after {
+  content: "";
+  background-image: url("../../assets/checkmark.svg");
+  background-size: 14px 24px;
+  width: 14px;
+  height: 24px;
+}
+
+.labelContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 14px;
+}
+
+.description {
+  font-size: 12px;
+  color: #555;
+}
+
