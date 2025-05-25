@@ -6,11 +6,14 @@ import { getFacilities, saveFacilities } from "../../data/facilityStore";
 import Input from "../../components/Input/Input";
 import Checkbox from "../../components/Checkbox/Checkbox";
 import Textarea from "../../components/TextArea/TextArea";
+import Button from "../../components/Button/Button";
+import styles from "./FacilityForm.module.css";
 
 const FacilityForm: FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEditing = Boolean(id);
+  const buttonText = isEditing ? "Update Facility" : "Create Facility";
 
   const [isFirstFacility, setIsFirstFacility] = useState(false);
 
@@ -88,13 +91,14 @@ const FacilityForm: FC = () => {
     navigate("/");
   };
 
+  const handleCancel = () => {
+    navigate("/");
+  };
+
   return (
     <div>
       <h2>{isEditing ? "Edit Facility" : "Create a New Facility"}</h2>
-      <form
-        onSubmit={handleSubmit}
-        style={{ display: "flex", flexDirection: "column", gap: "16px" }}
-      >
+      <form onSubmit={handleSubmit} className={styles.form}>
         <Input
           id="name"
           label="Name *"
@@ -146,7 +150,19 @@ const FacilityForm: FC = () => {
           description="Setting this facility as default will override the currently marked default facility."
         />
 
-        <button type="submit">{isEditing ? "Update" : "Create"}</button>
+        <div className={styles.buttonContainer}>
+          <Button
+            variant="secondary"
+            padding="normal"
+            type="button"
+            onClick={handleCancel}
+          >
+            Cancel
+          </Button>
+          <Button variant="primary" padding="normal" type="submit">
+            {buttonText}
+          </Button>
+        </div>
       </form>
     </div>
   );
