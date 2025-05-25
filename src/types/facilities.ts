@@ -5,8 +5,8 @@ export interface Facility {
   description: string;
   imageUrl: string;
   isDefault: boolean;
-  openingHour: string; // e.g., "08:00"
-  closingHour: string; // e.g., "18:00"
+  openingTime: string; // e.g., "08:00"
+  closingTime: string; // e.g., "18:00"
 }
 
 export type Statuses = "Open" | "Closed";

@@ -20,7 +20,7 @@ const FacilityCard: FC<FacilityCardProps> = ({
   onEdit,
   onDelete,
 }) => {
-  const isOpen = isFacilityOpen(facility.openingHour, facility.closingHour);
+  const isOpen = isFacilityOpen(facility.openingTime, facility.closingTime);
 
   return (
     <Card>

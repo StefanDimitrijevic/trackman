@@ -1,0 +1,15 @@
+.facilityList {
+  padding: 32px 16px 0;
+}
+
+.buttonRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.facilityGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 380px);
+  gap: 12px;
+}
