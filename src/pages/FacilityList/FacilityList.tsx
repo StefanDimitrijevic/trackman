@@ -1,12 +1,9 @@
 import { useState, useEffect, type FC } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Facility } from "../../types/facilities";
-import LocationMarker from "../../assets/location-marker.svg";
-import TrashCan from "../../assets/trashcan.svg";
-import DefaultFacility from "../../assets/star.svg";
-import StatusBadge from "../../components/StatusBadge/StatusBadge";
 import { getFacilities, saveFacilities } from "../../data/facilityStore";
-import { isFacilityOpen } from "../../utils/openingHours";
+import FacilityCard from "../../components/FacilityCard/FacilityCard";
+import Button from "../../components/Button/Button";
 
 const FacilityList: FC = () => {
   const navigate = useNavigate();
@@ -17,6 +14,10 @@ const FacilityList: FC = () => {
     const storedFacilities = getFacilities();
     setFacilities(storedFacilities);
   }, []);
+
+  const handleEditFacility = (id: string) => {
+    navigate(`/edit/${id}`);
+  };
 
   const handleDeleteFacility = (id: string) => {
     const facilitiesCopy = [...facilities];
@@ -35,7 +36,13 @@ const FacilityList: FC = () => {
 
   return (
     <div>
-      <button onClick={() => navigate("/create")}>Create Facility</button>
+      <Button
+        variant="primary"
+        padding="normal"
+        onClick={() => navigate("/create")}
+      >
+        Create Facility
+      </Button>
       <div
         style={{
           display: "flex",
@@ -43,113 +50,14 @@ const FacilityList: FC = () => {
           flexWrap: "wrap",
         }}
       >
-        {facilities.map((facility) => {
-          const isOpen = isFacilityOpen(
-            facility.openingHour,
-            facility.closingHour
-          );
-          return (
-            <div
-              key={facility.id}
-              style={{
-                padding: "12px",
-                borderRadius: "8px",
-                backgroundColor: "#FFFFFF",
-                width: "348px",
-              }}
-            >
-              <div style={{ position: "relative" }}>
-                {facility.isDefault && (
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "8px",
-                      left: "8px",
-                      backgroundColor: "rgba(151, 81, 2, 0.5)", // semi-transparent brownish box
-                      borderRadius: "50%",
-                      padding: "4px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <img src={DefaultFacility} alt="default" />
-                  </div>
-                )}
-                <img
-                  src={facility.imageUrl}
-                  alt={facility.name}
-                  style={{
-                    borderRadius: "4px",
-                    height: "195px",
-                    width: "100%",
-                  }}
-                />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <h4>{facility.name}</h4>
-                <StatusBadge status={isOpen ? "Open" : "Closed"} />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  height: "32px",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "2px",
-                  }}
-                >
-                  <img src={LocationMarker} alt="location" />
-                  <p>{facility.address}</p>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "4px",
-                  }}
-                >
-                  <button
-                    style={{
-                      display: "flex",
-                      backgroundColor: "#F5F5F5",
-                      border: "none",
-                      borderRadius: "4px",
-                      padding: "8px",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => handleDeleteFacility(facility.id)}
-                  >
-                    <img src={TrashCan} alt="delete-facility" />
-                  </button>
-                  <button
-                    style={{
-                      backgroundColor: "#F5F5F5",
-                      border: "none",
-                      borderRadius: "4px",
-                      padding: "6px 24px",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => navigate(`/edit/${facility.id}`)}
-                  >
-                    Edit
-                  </button>
-                </div>
-              </div>
-              <p>{facility.description}</p>
-            </div>
-          );
-        })}
+        {facilities.map((facility) => (
+          <FacilityCard
+            key={facility.id}
+            facility={facility}
+            onEdit={handleEditFacility}
+            onDelete={handleDeleteFacility}
+          />
+        ))}
       </div>
     </div>
   );

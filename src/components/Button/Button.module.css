@@ -1,0 +1,38 @@
+.button {
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  gap: 8px;
+}
+
+.primary {
+  background-color: #ec691a;
+  color: #fff;
+}
+
+.secondary {
+  background-color: #f5f5f5;
+  color: #000;
+}
+
+.iconOnly {
+  padding: 8px;
+}
+
+.withText.tightPadding {
+  padding: 6px 24px;
+}
+
+.withText.normalPadding {
+  padding: 8px 24px;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
