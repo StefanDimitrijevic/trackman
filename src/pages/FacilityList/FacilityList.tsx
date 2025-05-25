@@ -6,6 +6,7 @@ import TrashCan from "../../assets/trashcan.svg";
 import DefaultFacility from "../../assets/star.svg";
 import StatusBadge from "../../components/StatusBadge/StatusBadge";
 import { getFacilities, saveFacilities } from "../../data/facilityStore";
+import { isFacilityOpen } from "../../utils/openingHours";
 
 const FacilityList: FC = () => {
   const navigate = useNavigate();
@@ -30,19 +31,6 @@ const FacilityList: FC = () => {
 
     setFacilities(updatedFacilities);
     saveFacilities(updatedFacilities);
-  };
-
-  const isFacilityOpen = (
-    openingHour: string,
-    closingHour: string
-  ): boolean => {
-    const now = new Date();
-    const currentHour = now.getHours();
-
-    const [openHour] = openingHour.split(":").map(Number);
-    const [closeHour] = closingHour.split(":").map(Number);
-
-    return currentHour >= openHour && currentHour < closeHour;
   };
 
   return (
