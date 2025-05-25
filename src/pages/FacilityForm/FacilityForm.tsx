@@ -3,6 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { Facility } from "../../types/facilities";
 import { getFacilities, saveFacilities } from "../../data/facilityStore";
+import Input from "../../components/Input/Input";
+import Checkbox from "../../components/Checkbox/Checkbox";
+import Textarea from "../../components/TextArea/TextArea";
 
 const FacilityForm: FC = () => {
   const { id } = useParams();
@@ -87,81 +90,61 @@ const FacilityForm: FC = () => {
 
   return (
     <div>
-      <h2>{isEditing ? "Edit Facility" : "Create Facility"}</h2>
+      <h2>{isEditing ? "Edit Facility" : "Create a New Facility"}</h2>
       <form
         onSubmit={handleSubmit}
         style={{ display: "flex", flexDirection: "column", gap: "16px" }}
       >
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <label htmlFor="name">Name *</label>
-          <input
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
+        <Input
+          id="name"
+          label="Name *"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
 
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <label htmlFor="address">Address *</label>
-          <input
-            id="address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-        </div>
+        <Input
+          id="address"
+          label="Address *"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+        />
 
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <label htmlFor="description">Description *</label>
-          <textarea
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
+        <Textarea
+          id="description"
+          label="Description *"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
 
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <label htmlFor="imageUrl">Image URL *</label>
-          <input
-            id="imageUrl"
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
-          />
-        </div>
+        <Input
+          id="imageUrl"
+          label="Image URL *"
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+        />
 
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <label htmlFor="openingHour">Opening Hour *</label>
-          <input
-            id="openingHour"
-            value={openingHour}
-            onChange={(e) => setOpeningHour(e.target.value)}
-          />
-        </div>
+        <Input
+          id="openingHour"
+          label="Opening Hour *"
+          value={openingHour}
+          onChange={(e) => setOpeningHour(e.target.value)}
+        />
 
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <label htmlFor="closingHour">Closing Hour *</label>
-          <input
-            id="closingHour"
-            value={closingHour}
-            onChange={(e) => setClosingHour(e.target.value)}
-          />
-        </div>
+        <Input
+          id="closingHour"
+          label="Closing Hour *"
+          value={closingHour}
+          onChange={(e) => setClosingHour(e.target.value)}
+        />
 
-        <div style={{ display: "flex", alignItems: "flex-start", gap: "8px" }}>
-          <input
-            id="isDefault"
-            type="checkbox"
-            checked={isDefault}
-            disabled={isFirstFacility}
-            onChange={(e) => setIsDefault(e.target.checked)}
-          />
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <label htmlFor="isDefault">Default Facility</label>
-            <span style={{ fontSize: "12px", color: "#555" }}>
-              Setting this facility as default will override the currently
-              marked default facility.
-            </span>
-          </div>
-        </div>
+        <Checkbox
+          id="isDefault"
+          label="Default Facility"
+          checked={isDefault}
+          disabled={isFirstFacility}
+          onChange={(e) => setIsDefault(e.target.checked)}
+          description="Setting this facility as default will override the currently marked default facility."
+        />
 
         <button type="submit">{isEditing ? "Update" : "Create"}</button>
       </form>
