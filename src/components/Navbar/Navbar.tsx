@@ -1,4 +1,3 @@
-// src/components/Navbar/Navbar.tsx
 import { NavLink, Link } from "react-router-dom";
 import type { FC } from "react";
 import TrackmanLogo from "../../assets/trackman-logo.svg";
@@ -14,22 +13,24 @@ const navLinks = [
 const Navbar: FC = () => {
   return (
     <nav className={styles.navbar} aria-label="Main navigation">
-      <Link to="/" className={styles.logo}>
-        <img src={TrackmanLogo} alt="TrackMan Logo" role="img" />
-      </Link>
-      <ul className={styles.navLinks}>
-        {navLinks.map(({ to, label, end }) => (
-          <li key={to}>
-            <NavLink
-              to={to}
-              end={end}
-              className={({ isActive }) => (isActive ? styles.active : "")}
-            >
-              {label}
-            </NavLink>
-          </li>
-        ))}
-      </ul>
+      <div className={styles.navContent}>
+        <Link to="/" className={styles.logo}>
+          <img src={TrackmanLogo} alt="TrackMan Logo" role="img" />
+        </Link>
+        <ul className={styles.navLinks}>
+          {navLinks.map(({ to, label, end }) => (
+            <li key={to}>
+              <NavLink
+                to={to}
+                end={end}
+                className={({ isActive }) => (isActive ? styles.active : "")}
+              >
+                {label}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </div>
     </nav>
   );
 };

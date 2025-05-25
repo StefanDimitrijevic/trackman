@@ -21,8 +21,8 @@ const FacilityForm: FC = () => {
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [openingHour, setOpeningHour] = useState("");
-  const [closingHour, setClosingHour] = useState("");
+  const [openingTime, setOpeningTime] = useState("");
+  const [closingTime, setClosingTime] = useState("");
   const [isDefault, setIsDefault] = useState(false);
 
   useEffect(() => {
@@ -35,8 +35,8 @@ const FacilityForm: FC = () => {
         setAddress(facility.address);
         setDescription(facility.description);
         setImageUrl(facility.imageUrl);
-        setOpeningHour(facility.openingHour);
-        setClosingHour(facility.closingHour);
+        setOpeningTime(facility.openingTime);
+        setClosingTime(facility.closingTime);
         setIsDefault(facility.isDefault);
       }
     } else {
@@ -57,8 +57,8 @@ const FacilityForm: FC = () => {
       address,
       description,
       imageUrl,
-      openingHour,
-      closingHour,
+      openingTime,
+      closingTime,
       isDefault,
     };
 
@@ -96,12 +96,14 @@ const FacilityForm: FC = () => {
   };
 
   return (
-    <div>
-      <h2>{isEditing ? "Edit Facility" : "Create a New Facility"}</h2>
+    <div className={styles.facilityForm}>
+      <div className={styles.header}>
+        <h2>{isEditing ? "Edit Facility" : "Create a New Facility"}</h2>
+      </div>
       <form onSubmit={handleSubmit} className={styles.form}>
         <Input
           id="name"
-          label="Name *"
+          label="Facility Name *"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -122,23 +124,9 @@ const FacilityForm: FC = () => {
 
         <Input
           id="imageUrl"
-          label="Image URL *"
+          label="Cover Image URL *"
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
-        />
-
-        <Input
-          id="openingHour"
-          label="Opening Hour *"
-          value={openingHour}
-          onChange={(e) => setOpeningHour(e.target.value)}
-        />
-
-        <Input
-          id="closingHour"
-          label="Closing Hour *"
-          value={closingHour}
-          onChange={(e) => setClosingHour(e.target.value)}
         />
 
         <Checkbox
@@ -149,6 +137,26 @@ const FacilityForm: FC = () => {
           onChange={(e) => setIsDefault(e.target.checked)}
           description="Setting this facility as default will override the currently marked default facility."
         />
+
+        <div className={styles.hoursLabel}>
+          <h4 className={styles.hoursLabel}>Working Hours</h4>
+
+          <div className={styles.hoursContainer}>
+            <Input
+              id="openingTime"
+              label="Opening TIme *"
+              value={openingTime}
+              onChange={(e) => setOpeningTime(e.target.value)}
+            />
+
+            <Input
+              id="closingTime"
+              label="Closing Time *"
+              value={closingTime}
+              onChange={(e) => setClosingTime(e.target.value)}
+            />
+          </div>
+        </div>
 
         <div className={styles.buttonContainer}>
           <Button
