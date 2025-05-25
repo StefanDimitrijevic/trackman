@@ -5,11 +5,16 @@ import { getFacilities, saveFacilities } from "../../data/facilityStore";
 import FacilityCard from "../../components/FacilityCard/FacilityCard";
 import Button from "../../components/Button/Button";
 import styles from "./FacilityList.module.css";
+import Modal from "../../components/Modal/Modal";
 
 const FacilityList: FC = () => {
   const navigate = useNavigate();
 
   const [facilities, setFacilities] = useState<Facility[]>([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedFacility, setSelectedFacility] = useState<Facility | null>(
+    null
+  );
 
   useEffect(() => {
     const storedFacilities = getFacilities();
@@ -18,6 +23,11 @@ const FacilityList: FC = () => {
 
   const handleEditFacility = (id: string) => {
     navigate(`/edit/${id}`);
+  };
+
+  const promptDelete = (facility: Facility) => {
+    setSelectedFacility(facility);
+    setShowDeleteModal(true);
   };
 
   const handleDeleteFacility = (id: string) => {
@@ -33,6 +43,14 @@ const FacilityList: FC = () => {
 
     setFacilities(updatedFacilities);
     saveFacilities(updatedFacilities);
+  };
+
+  const handleConfirmDelete = () => {
+    if (selectedFacility) {
+      handleDeleteFacility(selectedFacility.id);
+      setShowDeleteModal(false);
+      setSelectedFacility(null);
+    }
   };
 
   return (
@@ -52,10 +70,25 @@ const FacilityList: FC = () => {
             key={facility.id}
             facility={facility}
             onEdit={handleEditFacility}
-            onDelete={handleDeleteFacility}
+            onDelete={() => promptDelete(facility)}
           />
         ))}
       </div>
+
+      <Modal
+        isOpen={showDeleteModal}
+        title="Delete Facility"
+        description={
+          <>
+            Are you sure you want to delete this facility? This action cannot be
+            undone.
+            <br />
+            Facility: <strong>{selectedFacility?.name}</strong>
+          </>
+        }
+        onClose={() => setShowDeleteModal(false)}
+        onConfirm={handleConfirmDelete}
+      />
     </div>
   );
 };
