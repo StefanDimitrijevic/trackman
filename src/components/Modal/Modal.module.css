@@ -9,7 +9,7 @@
 }
 
 .modal {
-	background: white;
+	background: var(--color-white);
 	border-radius: 8px;
 	max-width: 440px;
 	box-shadow:
@@ -25,13 +25,13 @@
 }
 
 .section {
-	border-top: 1px solid #e0e0e0;
+	border-top: 1px solid var(--color-border);
 	padding: 12px;
 	line-height: 22px;
 }
 
 .actions {
-	border-top: 1px solid #e0e0e0;
+	border-top: 1px solid var(--color-border);
 	padding: 12px;
 	display: flex;
 	justify-content: flex-end;

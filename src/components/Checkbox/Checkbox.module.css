@@ -20,8 +20,8 @@
 }
 
 .checkbox:checked {
-  background-color: #EC691A;
-  border-color: #EC691A;
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
 }
 
 .checkbox:checked::after {
@@ -38,11 +38,11 @@
 }
 
 .label {
-  font-size: 14px;
+  font-size: var(--font-size-sm);
 }
 
 .description {
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   color: #555;
 }
 

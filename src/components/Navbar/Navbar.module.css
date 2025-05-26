@@ -1,11 +1,11 @@
 .navbar {
   background-color: var(--color-navbar-bg);
-  padding: 0 32px;
+  padding: var(--container-padding);
   height: 54px;
 }
 
 .navContent {
-  max-width: 1200px;
+  max-width: var(--container-max-width);
   margin: 0 auto;
   padding: 0 16px;
   height: 100%;
@@ -40,7 +40,7 @@
 
 .hamburger {
   display: none;
-  font-size: 24px;
+  font-size: var(--font-size-xl);
   background: none;
   border: none;
   color: var(--color-navbar-text);
