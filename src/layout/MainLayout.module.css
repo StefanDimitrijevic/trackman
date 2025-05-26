@@ -1,11 +1,11 @@
 .outerContainer {
-  padding: 0 32px;
-  background-color: #FAFAFA;
+  padding: var(--container-padding);
+  background-color: var(--color-bg);
   min-height: 100vh;
 }
 
 .innerContainer {
-  max-width: 1200px;
+  max-width: var(--container-max-width);
   margin: 0 auto;
   width: 100%;
 }

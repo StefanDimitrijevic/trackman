@@ -51,7 +51,7 @@
 .address {
   color: #757575;
   font-weight: 400;
-  font-size: 14px;
+  font-size: var(--font-size-sm);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -65,7 +65,7 @@
 
 .deleteButton {
   display: flex;
-  background-color: #f5f5f5;
+  background-color: var(--color-secondary);
   border: none;
   border-radius: 4px;
   padding: 8px;
@@ -73,7 +73,7 @@
 }
 
 .editButton {
-  background-color: #f5f5f5;
+  background-color: var(--color-secondary);
   border: none;
   border-radius: 4px;
   padding: 6px 24px;

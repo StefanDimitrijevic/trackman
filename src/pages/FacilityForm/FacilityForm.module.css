@@ -1,5 +1,5 @@
 .facilityForm {
-	padding: 32px 16px 0;
+	padding: var(--spacing-lg) var(--spacing-md) 0;
 }
 
 .header {
@@ -16,7 +16,7 @@
 }
 
 .errorText {
-	font-size: 12px;
+	font-size: var(--font-size-xs);
 	color: #b91919;
 }
 
