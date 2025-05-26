@@ -12,7 +12,12 @@
 	gap: 16px;
 	padding: 12px;
 	border-radius: 8px;
-	background-color: #FFFFFF;
+	background-color: var(--color-white);
+}
+
+.errorText {
+	font-size: 12px;
+	color: #b91919;
 }
 
 .hoursLabel {

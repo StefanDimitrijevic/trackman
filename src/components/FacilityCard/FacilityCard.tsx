@@ -69,8 +69,6 @@ const FacilityCard: FC<FacilityCardProps> = ({
           </Button>
         </div>
       </div>
-
-      <p style={{ marginTop: "4px" }}>{facility.description}</p>
     </Card>
   );
 };
