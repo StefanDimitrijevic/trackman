@@ -64,16 +64,25 @@ const FacilityList: FC = () => {
           Create Facility
         </Button>
       </div>
-      <div className={styles.facilityGrid}>
-        {facilities.map((facility) => (
-          <FacilityCard
-            key={facility.id}
-            facility={facility}
-            onEdit={handleEditFacility}
-            onDelete={() => promptDelete(facility)}
-          />
-        ))}
-      </div>
+      {facilities.length === 0 ? (
+        <p>
+          Click the <strong>Create Facility</strong> button to start adding
+          facilities!
+        </p>
+      ) : (
+        <div className={styles.facilityGrid}>
+          {[...facilities]
+            .sort((a, b) => (b.isDefault ? 1 : 0) - (a.isDefault ? 1 : 0))
+            .map((facility) => (
+              <FacilityCard
+                key={facility.id}
+                facility={facility}
+                onEdit={handleEditFacility}
+                onDelete={() => promptDelete(facility)}
+              />
+            ))}
+        </div>
+      )}
 
       <Modal
         isOpen={showDeleteModal}
