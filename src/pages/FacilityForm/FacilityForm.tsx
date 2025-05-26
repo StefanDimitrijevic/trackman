@@ -12,85 +12,73 @@ import styles from "./FacilityForm.module.css";
 const FacilityForm: FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const isEditing = Boolean(id);
-  const buttonText = isEditing ? "Update Facility" : "Create Facility";
+  const isEditingFacility = Boolean(id);
+  const buttonText = isEditingFacility ? "Update Facility" : "Create Facility";
 
   const [isFirstFacility, setIsFirstFacility] = useState(false);
+  const [formData, setFormData] = useState<Facility>({
+    id: "",
+    name: "",
+    address: "",
+    description: "",
+    imageUrl: "",
+    openingTime: "",
+    closingTime: "",
+    isDefault: false,
+  });
 
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
-  const [description, setDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [openingTime, setOpeningTime] = useState("");
-  const [closingTime, setClosingTime] = useState("");
-  const [isDefault, setIsDefault] = useState(false);
+  const updateField = <K extends keyof Facility>(
+    key: K, // must be one of the keys in the Facility type
+    value: Facility[K] // must match the type of the field
+  ) => {
+    // overwrite one specific field
+    setFormData((prev) => ({ ...prev, [key]: value }));
+  };
 
   useEffect(() => {
     const facilities = getFacilities();
 
-    if (isEditing && id) {
+    if (isEditingFacility && id) {
       const facility = facilities.find((f) => f.id === id);
       if (facility) {
-        setName(facility.name);
-        setAddress(facility.address);
-        setDescription(facility.description);
-        setImageUrl(facility.imageUrl);
-        setOpeningTime(facility.openingTime);
-        setClosingTime(facility.closingTime);
-        setIsDefault(facility.isDefault);
+        setFormData(facility);
       }
     } else {
-      // Create mode logic
+      // Set first facility as default
       if (facilities.length === 0) {
-        setIsDefault(true);
+        setFormData((prev) => ({ ...prev, isDefault: true }));
         setIsFirstFacility(true);
       }
     }
-  }, [id, isEditing]);
+  }, [id, isEditingFacility]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    const newFacility: Facility = {
-      id: id ?? Date.now().toString(),
-      name,
-      address,
-      description,
-      imageUrl,
-      openingTime,
-      closingTime,
-      isDefault,
-    };
-
     const facilities = getFacilities();
 
-    if (isEditing && id) {
-      // Remove existing facility with same ID
-      let updatedFacilities = facilities.filter((f) => f.id !== id);
+    // Prepare new facility object
+    const newFacility: Facility = {
+      ...formData,
+      id: id ?? Date.now().toString(),
+    };
 
-      // Clear previous default if this one is now default
-      if (isDefault) {
-        updatedFacilities = updatedFacilities.map((f) => ({
-          ...f,
-          isDefault: false,
-        }));
-      }
+    // Remove the facility being edited else keep list as it is
+    const filteredFacilities = isEditingFacility
+      ? facilities.filter((f) => f.id !== id)
+      : facilities;
 
-      saveFacilities([...updatedFacilities, newFacility]);
-      console.log("Updated:", newFacility);
-    } else {
-      // Create mode
-      const updatedFacilities = isDefault
-        ? facilities.map((f) => ({ ...f, isDefault: false }))
-        : facilities;
+    // If the new facility is marked as default, clear the default from others
+    const normalizedFacilities = newFacility.isDefault
+      ? filteredFacilities.map((f) => ({ ...f, isDefault: false }))
+      : filteredFacilities;
 
-      saveFacilities([...updatedFacilities, newFacility]);
-      console.log("Created:", newFacility);
-    }
-
+    // Save updated list with the new/updated facility included
+    saveFacilities([...normalizedFacilities, newFacility]);
     navigate("/");
   };
 
+  // Navigate to list view if creation or update is cancelled
   const handleCancel = () => {
     navigate("/");
   };
@@ -98,43 +86,47 @@ const FacilityForm: FC = () => {
   return (
     <div className={styles.facilityForm}>
       <div className={styles.header}>
-        <h2>{isEditing ? "Edit Facility" : "Create a New Facility"}</h2>
+        <h2>{isEditingFacility ? "Edit Facility" : "Create a New Facility"}</h2>
       </div>
       <form onSubmit={handleSubmit} className={styles.form}>
         <Input
           id="name"
           label="Facility Name *"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={formData.name}
+          onChange={(e) => updateField("name", e.target.value)}
+          required
         />
 
         <Input
           id="address"
           label="Address *"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
+          value={formData.address}
+          onChange={(e) => updateField("address", e.target.value)}
+          required
         />
 
         <Textarea
           id="description"
           label="Description *"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={formData.description}
+          onChange={(e) => updateField("description", e.target.value)}
+          required
         />
 
         <Input
           id="imageUrl"
           label="Cover Image URL *"
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
+          value={formData.imageUrl}
+          onChange={(e) => updateField("imageUrl", e.target.value)}
+          required
         />
 
         <Checkbox
           id="isDefault"
           label="Default Facility"
-          checked={isDefault}
+          checked={formData.isDefault}
           disabled={isFirstFacility}
-          onChange={(e) => setIsDefault(e.target.checked)}
+          onChange={(e) => updateField("isDefault", e.target.checked)}
           description="Setting this facility as default will override the currently marked default facility."
         />
 
@@ -144,16 +136,20 @@ const FacilityForm: FC = () => {
           <div className={styles.hoursContainer}>
             <Input
               id="openingTime"
-              label="Opening TIme *"
-              value={openingTime}
-              onChange={(e) => setOpeningTime(e.target.value)}
+              type="time"
+              label="Opening Time *"
+              value={formData.openingTime}
+              onChange={(e) => updateField("openingTime", e.target.value)}
+              required
             />
 
             <Input
               id="closingTime"
+              type="time"
               label="Closing Time *"
-              value={closingTime}
-              onChange={(e) => setClosingTime(e.target.value)}
+              value={formData.closingTime}
+              onChange={(e) => updateField("closingTime", e.target.value)}
+              required
             />
           </div>
         </div>
