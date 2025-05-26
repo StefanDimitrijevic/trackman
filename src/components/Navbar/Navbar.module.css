@@ -11,6 +11,7 @@
   height: 100%;
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .logo {
@@ -34,5 +35,41 @@
 
 .navLinks li a:hover,
 .navLinks li a.active {
-  color: #ffffff;
+  color: var(--color-white);
 }
+
+.hamburger {
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: var(--color-navbar-text);
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .navContent {
+    justify-content: space-between;
+  }
+  .hamburger {
+    display: block;
+  }
+
+  .navLinks {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--color-navbar-bg);
+    width: 100%;
+    padding: 16px;
+    gap: 16px;
+    z-index: 10;
+  }
+
+  .navLinks.mobileOpen {
+    display: flex;
+  }
+}
+

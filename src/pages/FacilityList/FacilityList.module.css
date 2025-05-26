@@ -11,5 +11,6 @@
 .facilityGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, 380px);
+  justify-content: center;
   gap: 12px;
 }
