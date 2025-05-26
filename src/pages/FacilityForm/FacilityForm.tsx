@@ -35,6 +35,20 @@ const FacilityForm: FC = () => {
       const facility = facilities.find((f) => f.id === id);
       if (facility) {
         setFormData(facility);
+
+        // Lock the checkbox if:
+        // - there's only one facility (prevent unchecking default)
+        // - or this facility is the only one marked as default
+        const otherDefaults = facilities.filter(
+          (f) => f.id !== id && f.isDefault
+        );
+
+        if (
+          facilities.length === 1 ||
+          (facility.isDefault && otherDefaults.length === 0)
+        ) {
+          setIsFirstFacility(true);
+        }
       }
     } else {
       // Set first facility as default
