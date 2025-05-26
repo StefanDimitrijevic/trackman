@@ -1,5 +1,5 @@
 .facilityList {
-  padding: 32px 16px 0;
+  padding: var(--spacing-lg) var(--spacing-md) 0;
 }
 
 .buttonRow {
@@ -11,5 +11,6 @@
 .facilityGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, 380px);
+  justify-content: center;
   gap: 12px;
 }
