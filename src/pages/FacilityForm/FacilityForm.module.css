@@ -15,6 +15,11 @@
 	background-color: var(--color-white);
 }
 
+.errorText {
+	font-size: 12px;
+	color: #b91919;
+}
+
 .hoursLabel {
 	margin-bottom: 12px;
 }

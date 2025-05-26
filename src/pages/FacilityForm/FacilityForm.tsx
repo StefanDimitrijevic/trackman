@@ -16,6 +16,7 @@ const FacilityForm: FC = () => {
   const buttonText = isEditingFacility ? "Update Facility" : "Create Facility";
 
   const [isFirstFacility, setIsFirstFacility] = useState(false);
+  const [isImageValid, setIsImageValid] = useState(true);
   const [formData, setFormData] = useState<Facility>({
     id: "",
     name: "",
@@ -26,14 +27,6 @@ const FacilityForm: FC = () => {
     closingTime: "",
     isDefault: false,
   });
-
-  const updateField = <K extends keyof Facility>(
-    key: K, // must be one of the keys in the Facility type
-    value: Facility[K] // must match the type of the field
-  ) => {
-    // overwrite one specific field
-    setFormData((prev) => ({ ...prev, [key]: value }));
-  };
 
   useEffect(() => {
     const facilities = getFacilities();
@@ -51,6 +44,27 @@ const FacilityForm: FC = () => {
       }
     }
   }, [id, isEditingFacility]);
+
+  // simple validation for image urls being valid
+  useEffect(() => {
+    if (!formData.imageUrl) {
+      setIsImageValid(true);
+      return;
+    }
+
+    const img = new Image();
+    img.onload = () => setIsImageValid(true);
+    img.onerror = () => setIsImageValid(false);
+    img.src = formData.imageUrl;
+  }, [formData.imageUrl]);
+
+  const updateField = <K extends keyof Facility>(
+    key: K, // must be one of the keys in the Facility type
+    value: Facility[K] // must match the type of the field
+  ) => {
+    // overwrite one specific field
+    setFormData((prev) => ({ ...prev, [key]: value }));
+  };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -121,6 +135,12 @@ const FacilityForm: FC = () => {
           required
         />
 
+        {formData.imageUrl && !isImageValid && (
+          <p className={styles.errorText}>
+            This URL does not appear to be a valid image.
+          </p>
+        )}
+
         <Checkbox
           id="isDefault"
           label="Default Facility"
@@ -163,7 +183,12 @@ const FacilityForm: FC = () => {
           >
             Cancel
           </Button>
-          <Button variant="primary" padding="normal" type="submit">
+          <Button
+            variant="primary"
+            padding="normal"
+            type="submit"
+            disabled={!isImageValid}
+          >
             {buttonText}
           </Button>
         </div>
